@@ -133,7 +133,8 @@ SceneNode::SceneNode(Game* game)
 	}
 	XMFLOAT4X4 SceneNode::getTransform() const
 	{
-		return XMFLOAT4X4();
+		XMFLOAT4X4 transform;
+		return transform;
 	}
 
 	void SceneNode::move(float x, float y, float z)

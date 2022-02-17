@@ -20,8 +20,7 @@ bool Game::Initialize()
     if (!D3DApp::Initialize())
         return false;
 
-    mCamera.SetPosition(0, 5, 0);
-    mCamera.Pitch(3.14 / 2);
+    //mCamera.SetPosition(0.0f, -10.0f, 0.0f);
 
     // Reset the command list to prep for initialization commands.
     ThrowIfFailed(mCommandList->Reset(mDirectCmdListAlloc.Get(), nullptr));
@@ -95,7 +94,7 @@ void Game::Update(const GameTimer& gt)
 {
     OnKeyboardInput(gt);
     mWorld.update(gt);
-    //UpdateCamera(gt);
+    UpdateCamera(gt);
 
     // Cycle through the circular frame resource array.
     mCurrFrameResourceIndex = (mCurrFrameResourceIndex + 1) % gNumFrameResources;
@@ -196,42 +195,42 @@ void Game::OnMouseUp(WPARAM btnState, int x, int y)
 
 void Game::OnMouseMove(WPARAM btnState, int x, int y)
 {
-    //if ((btnState & MK_LBUTTON) != 0)
-    //{
-    //    // Make each pixel correspond to a quarter of a degree.
-    //    float dx = XMConvertToRadians(0.25f * static_cast<float>(x - mLastMousePos.x));
-    //    float dy = XMConvertToRadians(0.25f * static_cast<float>(y - mLastMousePos.y));
+    if ((btnState & MK_LBUTTON) != 0)
+    {
+        // Make each pixel correspond to a quarter of a degree.
+        float dx = XMConvertToRadians(0.25f * static_cast<float>(x - mLastMousePos.x));
+        float dy = XMConvertToRadians(0.25f * static_cast<float>(y - mLastMousePos.y));
 
-    //    // Update angles based on input to orbit camera around box.
-    //    mTheta += dx;
-    //    mPhi += dy;
+        // Update angles based on input to orbit camera around box.
+        mTheta += dx;
+        mPhi += dy;
 
-    //    // Restrict the angle mPhi.
-    //    mPhi = MathHelper::Clamp(mPhi, 0.1f, MathHelper::Pi - 0.1f);
-    //}
-    //else if ((btnState & MK_RBUTTON) != 0)
-    //{
-    //    // Make each pixel correspond to 0.2 unit in the scene.
-    //    float dx = 0.05f * static_cast<float>(x - mLastMousePos.x);
-    //    float dy = 0.05f * static_cast<float>(y - mLastMousePos.y);
+        // Restrict the angle mPhi.
+        mPhi = MathHelper::Clamp(mPhi, 0.1f, MathHelper::Pi - 0.1f);
+    }
+    else if ((btnState & MK_RBUTTON) != 0)
+    {
+        // Make each pixel correspond to 0.2 unit in the scene.
+        float dx = 0.05f * static_cast<float>(x - mLastMousePos.x);
+        float dy = 0.05f * static_cast<float>(y - mLastMousePos.y);
 
-    //    // Update the camera radius based on input.
-    //    mRadius += dx - dy;
+        // Update the camera radius based on input.
+        mRadius += dx - dy;
 
-    //    // Restrict the radius.
-    //    mRadius = MathHelper::Clamp(mRadius, 5.0f, 150.0f);
-    //}
+        // Restrict the radius.
+        mRadius = MathHelper::Clamp(mRadius, 5.0f, 150.0f);
+    }
 
-	if ((btnState & MK_LBUTTON) != 0)
-	{
-		// Make each pixel correspond to a quarter of a degree.
-		float dx = XMConvertToRadians(0.25f * static_cast<float>(x - mLastMousePos.x));
-		float dy = XMConvertToRadians(0.25f * static_cast<float>(y - mLastMousePos.y));
-
-		// Update angles based on input to orbit camera around box.
-		mCamera.Pitch(dy);
-		mCamera.RotateY(dx);
-	}
+	//if ((btnState & MK_LBUTTON) != 0)
+	//{
+	//	// Make each pixel correspond to a quarter of a degree.
+	//	float dx = XMConvertToRadians(0.25f * static_cast<float>(x - mLastMousePos.x));
+	//	float dy = XMConvertToRadians(0.25f * static_cast<float>(y - mLastMousePos.y));
+	//
+	//	// Update angles based on input to orbit camera around box.
+	//	mCamera.Pitch(dy);
+	//	mCamera.RotateY(dx);
+	//}
 
     mLastMousePos.x = x;
     mLastMousePos.y = y;
@@ -241,47 +240,35 @@ void Game::OnKeyboardInput(const GameTimer& gt)
 {
 	const float dt = gt.DeltaTime();
 
-	mCamera.GetLook();
-	float tmin = 0;
-	float buffer = 0.5f;
-	XMFLOAT3 oppositef3(-1, -1, -1);
-	XMVECTOR opposite = XMLoadFloat3(&oppositef3);
-
 	if (GetAsyncKeyState('W') & 0x8000)
-	{
-		bool hit = false;
-
-		if (!hit)
-		{
-			mCamera.Walk(10.0f * dt);
-		}
-	}
+		mCamera.Walk(10.0f * dt);
 
 	if (GetAsyncKeyState('S') & 0x8000)
-	{
-		bool hit = false;
+		mCamera.Walk(-10.0f * dt);
 
-		if (!hit)
-		{
-			mCamera.Walk(-10.0f * dt);
-		}
-	}
+	if (GetAsyncKeyState('A') & 0x8000)
+		mCamera.Strafe(-10.0f * dt);
+
+	if (GetAsyncKeyState('D') & 0x8000)
+		mCamera.Strafe(10.0f * dt);
+
+	mCamera.UpdateViewMatrix();
 }
 
 void Game::UpdateCamera(const GameTimer& gt)
 {
     // Convert Spherical to Cartesian coordinates.
-    //mEyePos.x = mRadius*sinf(mPhi)*cosf(mTheta);
-    //mEyePos.z = mRadius*sinf(mPhi)*sinf(mTheta);
-    //mEyePos.y = mRadius*cosf(mPhi);
+    mEyePos.x = mRadius*sinf(mPhi)*cosf(mTheta);
+    mEyePos.z = mRadius*sinf(mPhi)*sinf(mTheta);
+    mEyePos.y = mRadius*cosf(mPhi);
 
     // Build the view matrix.
-    /*XMVECTOR pos = XMVectorSet(mEyePos.x, mEyePos.y, mEyePos.z, 1.0f);
+    XMVECTOR pos = XMVectorSet(mEyePos.x, mEyePos.y, mEyePos.z, 1.0f);
     XMVECTOR target = XMVectorZero();
     XMVECTOR up = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
 
     XMMATRIX view = XMMatrixLookAtLH(pos, target, up);
-    XMStoreFloat4x4(&mView, view);*/
+    XMStoreFloat4x4(&mView, view);
 }
 
 void Game::AnimateMaterials(const GameTimer& gt)
@@ -342,6 +329,9 @@ void Game::UpdateMaterialCBs(const GameTimer& gt)
 
 void Game::UpdateMainPassCB(const GameTimer& gt)
 {
+	//XMMATRIX view = mCamera.GetView();
+	//XMMATRIX proj = mCamera.GetProj();
+
 	XMMATRIX view = XMLoadFloat4x4(&mView);
 	XMMATRIX proj = XMLoadFloat4x4(&mProj);
 
@@ -357,6 +347,7 @@ void Game::UpdateMainPassCB(const GameTimer& gt)
 	XMStoreFloat4x4(&mMainPassCB.ViewProj, XMMatrixTranspose(viewProj));
 	XMStoreFloat4x4(&mMainPassCB.InvViewProj, XMMatrixTranspose(invViewProj));
 	mMainPassCB.EyePosW = mEyePos;
+	//mMainPassCB.EyePosW = mCamera.GetPosition3f();
 	mMainPassCB.RenderTargetSize = XMFLOAT2((float)mClientWidth, (float)mClientHeight);
 	mMainPassCB.InvRenderTargetSize = XMFLOAT2(1.0f / mClientWidth, 1.0f / mClientHeight);
 	mMainPassCB.NearZ = 1.0f;
@@ -698,8 +689,8 @@ void Game::BuildRenderItems()
 	mWorld.buildScene();
 
 	// All the render items are opaque.
-	for(auto& e : mAllRitems)
-		mOpaqueRitems.push_back(e.get());
+	//for(auto& e : mAllRitems)
+	//	mOpaqueRitems.push_back(e.get());
 	 
 	// Sky
 	/*auto boxRitem = std::make_unique<RenderItem>();
