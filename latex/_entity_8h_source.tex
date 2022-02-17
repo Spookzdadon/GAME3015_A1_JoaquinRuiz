@@ -1,0 +1,27 @@
+\hypertarget{_entity_8h_source}{}\doxysection{Entity.\+h}
+\label{_entity_8h_source}\index{DirectX Test/Project1/Project1/Entity.h@{DirectX Test/Project1/Project1/Entity.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include "{}../../Common/d3dApp.h"{}}}
+\DoxyCodeLine{3 \textcolor{preprocessor}{\#include "{}Vector3f.h"{}}}
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}RenderItem.h"{}}}
+\DoxyCodeLine{5 \textcolor{keyword}{using} Microsoft::WRL::ComPtr;}
+\DoxyCodeLine{6 \textcolor{keyword}{using namespace }DirectX;}
+\DoxyCodeLine{7 \textcolor{keyword}{using namespace }DirectX::PackedVector;}
+\DoxyCodeLine{8 }
+\DoxyCodeLine{9 }
+\DoxyCodeLine{10 \textcolor{keyword}{class }\mbox{\hyperlink{class_entity}{Entity}}}
+\DoxyCodeLine{11 \{}
+\DoxyCodeLine{12 \textcolor{keyword}{public}:}
+\DoxyCodeLine{13     \mbox{\hyperlink{class_entity}{Entity}}();}
+\DoxyCodeLine{14     \textcolor{keywordtype}{void} setVelocity(\mbox{\hyperlink{class_vector3f}{Vector3f}} setVelocity);}
+\DoxyCodeLine{15     \textcolor{keywordtype}{void} setVelocity(\textcolor{keywordtype}{float} vx, \textcolor{keywordtype}{float} vy);}
+\DoxyCodeLine{16     \mbox{\hyperlink{class_vector3f}{Vector3f}} getVelocity() \textcolor{keyword}{const};}
+\DoxyCodeLine{17     \textcolor{keywordtype}{void} BuildRenderItem();}
+\DoxyCodeLine{18 \textcolor{keyword}{private}:}
+\DoxyCodeLine{19     \mbox{\hyperlink{class_vector3f}{Vector3f}} mVelocity;}
+\DoxyCodeLine{20     \mbox{\hyperlink{class_game}{Game}} gameClass;}
+\DoxyCodeLine{21 \};}
+
+\end{DoxyCode}

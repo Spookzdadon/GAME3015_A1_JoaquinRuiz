@@ -1,0 +1,25 @@
+var NAVTREEINDEX0 =
+{
+"_entity_8h_source.html":[1,0,0,0,0,0],
+"_frame_resource_8h_source.html":[1,0,0,0,0,1],
+"_render_item_8h_source.html":[1,0,0,0,0,2],
+"_vector3f_8h_source.html":[1,0,0,0,0,3],
+"annotated.html":[0,0],
+"class_entity.html":[0,0,0],
+"class_game.html":[0,0,2],
+"class_vector3f.html":[0,0,7],
+"classes.html":[0,1],
+"dir_03b92725daf4617fa56dcc07d638748b.html":[1,0,0],
+"dir_acb726aafff3a25f06b905f4829cf800.html":[1,0,0,0],
+"dir_b23a82ed90979a55bb096b33e48feaaa.html":[1,0,0,0,0],
+"files.html":[1,0],
+"hierarchy.html":[0,2],
+"index.html":[],
+"pages.html":[],
+"struct_frame_resource.html":[0,0,1],
+"struct_material_data.html":[0,0,3],
+"struct_object_constants.html":[0,0,4],
+"struct_pass_constants.html":[0,0,5],
+"struct_render_item.html":[0,0,6],
+"struct_vertex.html":[0,0,8]
+};

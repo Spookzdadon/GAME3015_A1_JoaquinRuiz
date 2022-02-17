@@ -1,0 +1,45 @@
+\hypertarget{_render_item_8h_source}{}\doxysection{Render\+Item.\+h}
+\label{_render_item_8h_source}\index{DirectX Test/Project1/Project1/RenderItem.h@{DirectX Test/Project1/Project1/RenderItem.h}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#pragma once}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#include "{}../../Common/d3dApp.h"{}}}
+\DoxyCodeLine{3 \textcolor{keyword}{using} Microsoft::WRL::ComPtr;}
+\DoxyCodeLine{4 \textcolor{keyword}{using namespace }DirectX;}
+\DoxyCodeLine{5 \textcolor{keyword}{using namespace }DirectX::PackedVector;}
+\DoxyCodeLine{6 }
+\DoxyCodeLine{7 \textcolor{comment}{// Lightweight structure stores parameters to draw a shape.  This will}}
+\DoxyCodeLine{8 \textcolor{comment}{// vary from app-\/to-\/app.}}
+\DoxyCodeLine{9 \textcolor{keyword}{struct }\mbox{\hyperlink{struct_render_item}{RenderItem}}}
+\DoxyCodeLine{10 \{}
+\DoxyCodeLine{11     \mbox{\hyperlink{struct_render_item}{RenderItem}}() = \textcolor{keywordflow}{default};}
+\DoxyCodeLine{12 }
+\DoxyCodeLine{13     \textcolor{comment}{// World matrix of the shape that describes the object's local space}}
+\DoxyCodeLine{14     \textcolor{comment}{// relative to the world space, which defines the position, orientation,}}
+\DoxyCodeLine{15     \textcolor{comment}{// and scale of the object in the world.}}
+\DoxyCodeLine{16     XMFLOAT4X4 World = MathHelper::Identity4x4();}
+\DoxyCodeLine{17 }
+\DoxyCodeLine{18     XMFLOAT4X4 TexTransform = MathHelper::Identity4x4();}
+\DoxyCodeLine{19 }
+\DoxyCodeLine{20     \textcolor{comment}{// Dirty flag indicating the object data has changed and we need to update the constant buffer.}}
+\DoxyCodeLine{21     \textcolor{comment}{// Because we have an object cbuffer for each FrameResource, we have to apply the}}
+\DoxyCodeLine{22     \textcolor{comment}{// update to each FrameResource.  Thus, when we modify obect data we should set }}
+\DoxyCodeLine{23     \textcolor{comment}{// NumFramesDirty = gNumFrameResources so that each frame resource gets the update.}}
+\DoxyCodeLine{24     \textcolor{keywordtype}{int} NumFramesDirty = gNumFrameResources;}
+\DoxyCodeLine{25 }
+\DoxyCodeLine{26     \textcolor{comment}{// Index into GPU constant buffer corresponding to the ObjectCB for this render item.}}
+\DoxyCodeLine{27     UINT ObjCBIndex = -\/1;}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29     Material* Mat = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{30     MeshGeometry* Geo = \textcolor{keyword}{nullptr};}
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32     \textcolor{comment}{// Primitive topology.}}
+\DoxyCodeLine{33     D3D12\_PRIMITIVE\_TOPOLOGY PrimitiveType = D3D\_PRIMITIVE\_TOPOLOGY\_TRIANGLELIST;}
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35     \textcolor{comment}{// DrawIndexedInstanced parameters.}}
+\DoxyCodeLine{36     UINT IndexCount = 0;}
+\DoxyCodeLine{37     UINT StartIndexLocation = 0;}
+\DoxyCodeLine{38     \textcolor{keywordtype}{int} BaseVertexLocation = 0;}
+\DoxyCodeLine{39 \};}
+
+\end{DoxyCode}
