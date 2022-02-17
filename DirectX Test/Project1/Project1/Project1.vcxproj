@@ -178,6 +178,7 @@
     <ClInclude Include="FrameResource.h" />
     <ClInclude Include="Game.hpp" />
     <ClInclude Include="RenderItem.h" />
+    <ClInclude Include="RenderLayer.h" />
     <ClInclude Include="SceneNode.hpp" />
     <ClInclude Include="SpriteNode.h" />
     <ClInclude Include="Vector3f.h" />

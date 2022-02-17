@@ -1,5 +1,4 @@
 #include "Game.hpp"
-#include <iostream>
 using namespace std;
 
 const int gNumFrameResources = 3;
@@ -50,6 +49,20 @@ bool Game::Initialize()
     FlushCommandQueue();
 
     return true;
+}
+
+
+std::vector<RenderItem*>& Game::getItemLayers(RenderLayer renderLayer)
+{
+	switch (renderLayer)
+	{
+	case Opaque:
+		return mRitemLayer[(int)RenderLayer::Opaque];
+		break;
+	case Transparent:
+		return mRitemLayer[(int)RenderLayer::Transparent];
+		break;
+	}
 }
 
 std::vector<std::unique_ptr<RenderItem>>& Game::getRenderItems()
@@ -139,10 +152,10 @@ void Game::Draw(const GameTimer& gt)
     auto passCB = mCurrFrameResource->PassCB->Resource();
     mCommandList->SetGraphicsRootConstantBufferView(2, passCB->GetGPUVirtualAddress());
 
-    DrawRenderItems(mCommandList.Get(), mRitemLayer[(int)World::RenderLayer::Opaque]);
+    DrawRenderItems(mCommandList.Get(), mRitemLayer[(int)RenderLayer::Opaque]);
 
     mCommandList->SetPipelineState(mPSOs["transparent"].Get());
-    DrawRenderItems(mCommandList.Get(), mRitemLayer[(int)World::RenderLayer::Transparent]);
+    DrawRenderItems(mCommandList.Get(), mRitemLayer[(int)RenderLayer::Transparent]);
 
     // Indicate a state transition on the resource usage.
     mCommandList->ResourceBarrier(1, &CD3DX12_RESOURCE_BARRIER::Transition(CurrentBackBuffer(),
@@ -222,7 +235,6 @@ void Game::OnMouseMove(WPARAM btnState, int x, int y)
 
     mLastMousePos.x = x;
     mLastMousePos.y = y;
-	cout << mLastMousePos.x + " " + mLastMousePos.y;
 }
 
 void Game::OnKeyboardInput(const GameTimer& gt)

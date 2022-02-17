@@ -2,6 +2,7 @@
 #include "SceneNode.hpp"
 #include "Aircraft.hpp"
 #include "SpriteNode.h"
+#include "RenderLayer.h"
 
 class World
 {
@@ -19,18 +20,18 @@ public:
 		std::unordered_map<std::string, std::unique_ptr<MeshGeometry>>& GameGeometries);
 	void buildScene();
 
-public:
-	enum RenderLayer
-	{
-		Opaque,
-		Transparent,
-		Count
-	};
+//public:
+//	enum RenderLayer
+//	{
+//		Opaque,
+//		Transparent,
+//		Count
+//	};
 
 private:
 	Game* mGame;
 	SceneNode* mSceneGraph;
-	std::array<SceneNode*, Count> mSceneLayers;
+	std::array<SceneNode*, RenderLayer::Count> mSceneLayers;
 	Aircraft* mPlayerAircraft;
 	SpriteNode* mBackground;
 	XMFLOAT4 mWorldBounds;

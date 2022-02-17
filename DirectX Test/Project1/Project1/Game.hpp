@@ -1,4 +1,5 @@
 #include "World.hpp"
+#include "RenderLayer.h"
 
 class Game : public D3DApp
 {
@@ -11,6 +12,7 @@ public:
 	virtual bool Initialize()override;
 
 public:
+	std::vector<RenderItem*>& getItemLayers(RenderLayer renderLayer);
 	std::vector<std::unique_ptr<RenderItem>>& getRenderItems();
 	std::unordered_map<std::string, std::unique_ptr<MeshGeometry>>& getGeometries();
 	std::unordered_map<std::string, std::unique_ptr<Material>>& getMaterials();
@@ -77,7 +79,7 @@ private:
 	// List of all the render items.
 	std::vector<std::unique_ptr<RenderItem>> mAllRitems;
 
-	std::vector<RenderItem*> mRitemLayer[(int)World::RenderLayer::Count];
+	std::vector<RenderItem*> mRitemLayer[(int)RenderLayer::Count];
 
 	// Render items divided by PSO.
 	std::vector<RenderItem*> mOpaqueRitems;

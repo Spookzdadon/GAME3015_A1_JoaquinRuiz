@@ -1,5 +1,6 @@
 #include "SpriteNode.h"
 #include "Game.hpp"
+#include "RenderLayer.h"
 
 SpriteNode::SpriteNode(Game* game) : Entity(game)
 {
@@ -25,5 +26,6 @@ void SpriteNode::buildCurrent()
 	renderer->StartIndexLocation = renderer->Geo->DrawArgs["box"].StartIndexLocation;
 	renderer->BaseVertexLocation = renderer->Geo->DrawArgs["box"].BaseVertexLocation;
 
+	game->getItemLayers(RenderLayer::Opaque).push_back(render.get());
 	game->getRenderItems().push_back(std::move(render));
 }
